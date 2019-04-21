@@ -42,7 +42,6 @@ app.get('/weather', (request, response) => {
 app.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
 
 
-
 // Helper Functions
 
 // function to get location data
@@ -57,12 +56,10 @@ function searchWeather(query) {
   const weatherData = require('./data/darksky.json');
   const weatherSummary = [];
   weatherData.daily.data.forEach(day => {
-    weatherSummary.push(day.time);
-    weatherSummary.push(day.forecast);
-  });
+    weatherSummary.push(new Weather(day));
+});
   console.log('weather Summary Array', weatherSummary);
-  const weather = new Weather(weatherData);
-  return weather;
+  return weatherSummary;
 }
 
 function Location(data) {
@@ -71,7 +68,7 @@ function Location(data) {
   this.longitude = data.results[0].geometry.location.lng;
 }
 
-function Weather(data) {
-  this.forecast = data.summary;
-  this.time = data.time;
+function Weather(day) {
+  this.time=day.time;
+  this.forecast=day.summary;
 }
