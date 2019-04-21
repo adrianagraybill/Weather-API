@@ -28,12 +28,15 @@ app.get('/location', (request, response) => {
 });
 
 app.get('/weather', (request, response) => {
+  try {
+    const weatherData = searchWeather(request.query.data.latitude);
+    response.send(weatherData);
+  }
+  catch (error) {
+    console.log(error);
+    response.status(500).send('Status: 500. Sorry, something went wrong.');
+  }
   console.log('From weather request', request.query.data.latitude);
-
-
-
-
-  response.send('Return the results here');
 });
 
 app.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
@@ -52,6 +55,12 @@ function searchToLatLong(query) {
 
 function searchWeather(query) {
   const weatherData = require('./data/darksky.json');
+  const weatherSummary = [];
+  weatherData.daily.data.forEach(day => {
+    weatherSummary.push(day.time);
+    weatherSummary.push(day.forecast);
+  });
+  console.log('weather Summary Array', weatherSummary);
   const weather = new Weather(weatherData);
   return weather;
 }
@@ -63,7 +72,6 @@ function Location(data) {
 }
 
 function Weather(data) {
-  this.formatted_query = data.results[0].formatted_address;
-  this.latitude = data.results[0].geometry.location.lat;
-  this.longitude = data.results[0].geometry.location.lng;
+  this.forecast = data.summary;
+  this.time = data.time;
 }
