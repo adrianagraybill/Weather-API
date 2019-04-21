@@ -69,6 +69,6 @@ function Location(data) {
 }
 
 function Weather(day) {
-  this.time=day.time;
+  this.time=(new Date(day.time)).toDateString();
   this.forecast=day.summary;
 }
