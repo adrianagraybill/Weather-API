@@ -52,6 +52,9 @@ function searchToLatLong(query) {
 
 function searchWeather(query) {
   const weatherData = require('./data/darksky.json');
+  weatherData.daily.data.forEach(day => {
+
+  });
   const weather = new Weather(weatherData);
   return weather;
 }
@@ -63,7 +66,6 @@ function Location(data) {
 }
 
 function Weather(data) {
-  this.formatted_query = data.results[0].formatted_address;
-  this.latitude = data.results[0].geometry.location.lat;
-  this.longitude = data.results[0].geometry.location.lng;
+  this.forecast = data.summary;
+  this.time = data.time;
 }
