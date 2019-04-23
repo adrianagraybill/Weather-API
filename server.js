@@ -30,6 +30,7 @@ app.get('/location', (request, response) => {
 app.get('/weather', (request, response) => {
   try {
     const weatherData = searchWeather(request.query.data.latitude);
+    // =searchWeather();
     response.send(weatherData);
   }
   catch (error) {
@@ -69,6 +70,8 @@ function Location(data) {
 }
 
 function Weather(day) {
-  this.time=(new Date(day.time)).toDateString();
+  let time=new Date(day.time*1000);
+  // multiply by 1000 to get proper timing
+  this.time=time.toDateString();
   this.forecast=day.summary;
 }
