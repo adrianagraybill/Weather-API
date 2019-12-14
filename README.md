@@ -1,4 +1,4 @@
-# lab-06-back-end
+# Weather API
 
 **Author**: Aileen and Adriana
 **Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
